@@ -39,12 +39,17 @@ newfield = field_value[:5] + '_NAME'
 arcpy.AddField_management(newshp, newfield, "DOUBLE")
 arcpy.AddMessage("Create new fields field COLLEGE_NAME")
 
-cursorS = arcpy.da.SearchCursor("Facilit", ('FAC_ID',))
-with arcpy.da.UpdateCursor(newshp, newfield,) as cursorUP:
+value = []
+with arcpy.da.SearchCursor("Facilit", ('FAC_ID',)) as cursorS:
+    for row in cursorS:
+        value.append(row)
+
+with arcpy.da.UpdateCursor(newshp, newfield, ) as cursorUP:
+    v = 0
     for u in cursorUP:
-        for s in cursorS:
-            u = s
-            cursorUP.updateRow(u)
+        u = value[v]
+        cursorUP.updateRow(u)
+        v += 1
 arcpy.AddMessage("Insert data into new fields field COLLEGE_NAME")
 
 arcpy.Delete_management("Facilit")
