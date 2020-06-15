@@ -43,3 +43,6 @@ with arcpy.da.InsertCursor(newshp, newfield) as cursorIn, arcpy.da.SearchCursor(
     for row in cursorS:
         cursorIn.insertRow(row)
 arcpy.AddMessage("Insert data into new fields field COLLEGE_NAME")
+
+arcpy.Delete_management("Facilit")
+arcpy.Delete_management("Zip")
